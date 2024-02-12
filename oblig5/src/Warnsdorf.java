@@ -10,76 +10,52 @@ public class Warnsdorf
     private static int brett[][];     // nxn-tabell, representerer sjakkbrettet
     private static int LEDIG = 0;     // Verdi som markerer ledig rute
 
-    // Dette har jeg gjort:
-    // Definerer ulike måter en springer kan bevege seg. Disse blir kalt i springertur()
     private static final int[] radEndring = {2, 1, -1, -2, -2, -1, 1, 2};
     private static final int[] kolonneEndring = {1, 2, 2, 1, -1, -2, -2, -1};
-    // Slutt Vebjørn's kule variabler
-
-
-    // springertur(): Rekursiv metode som prøver å finne en "springertur" med start i
-    // rute (i,j).  Returnerer true hvis løsning funnet, false ellers.
 
     public static boolean springertur(int i, int j)
     {
-        // Merker av at springer er flyttet til rute (i,j)
         antFlytt++;
         brett[i][j] = antFlytt;
 
-        // Bunn i rekursjonen:
-        // Løsningen er funnet hvis vi nå har gjort n² flytt
         if (antFlytt == n2)
             return true;
 
-        // Prøver rekursivt alle lovlige veier videre, maksimalt åtte
-        // rekursive kall på metoden springertur()
-
-        /*** Koden mangler her, skal programmeres i oppgave 2 ***/
-        // Dette har jeg gjort:
-        int[][] riktig = new int[n][n];
         int counter = Integer.MAX_VALUE;
-        int nesteI = i, nesteJ = j;
+        int nesteI = i, nesteJ = j, nyI = 0, nyJ = 0;
 
-        for (int u = 0; u < n; u++)
+        int internal_counter = 0;
+
+        for (int k = 0; k < 8; k++)
         {
-            for (int v = 0; v < n; v++)
-            {
-                int internal_counter = 0;
+            internal_counter = 0;
+            nesteI = i + radEndring[k];
+            nesteJ = j + kolonneEndring[k];
 
-                // Sjekker alle moves fra en gitt person og teller antall lovlige
-                for (int k = 0; k < 8; k++)
-                {
-                    int nyU = u + radEndring[k];
-                    int nyV = v + kolonneEndring[k];
+            if (lovlig(nesteI, nesteJ)) {
 
-                    if (lovlig(nyU, nyV)) {
+                for (int o = 0; o < 8; o++) {
+                    nesteI = nesteI + radEndring[o];
+                    nesteJ = nesteJ + kolonneEndring[o];
+                    if (lovlig(nesteI, nesteJ)) {
                         internal_counter++;
                     }
                 }
-
-                // Lagrer antall lovlige moves det er fra en gitt posisjon
-                riktig[u][v] = internal_counter;
-
-                // Hvis det er færre lovlige moves fra en gitt posisjon enn tidligere funnet
-                // vil det antallet bli lagret i counter, og en ny springertur vil kjøres fra den posisjonen
-                if (internal_counter < counter && internal_counter != 0) {
-                    counter = internal_counter;
-                    nesteI = u;
-                    nesteJ = v;
-                }
+            }
+            if (internal_counter < counter && internal_counter != 0) {
+                counter = internal_counter;
+                nyI = nesteI;
+                nyJ = nesteJ;
             }
         }
-        // Hvis det ikke er noen lovlige moves så går vi et skritt tilbake, setter den posisjonen ledig igjen
-        if (counter == Integer.MAX_VALUE) {
-            antFlytt--;
-            brett[i][j] = LEDIG;
-            System.out.println("Backtracking from position (" + i + ", " + j + ")");
-            System.out.println(brett[i][j]);
-            return true;
+        if (lovlig(nyI, nyJ)) {
+            if (springertur(nyI, nyJ)) {
+                return true;
+            }
         }
-
-        return springertur(nesteI, nesteJ);
-        // Slutt Vebjørn's fantastiske kode
+        antFlytt--;
+        brett[i][j] = LEDIG;
+        return false;
     }
 
 
