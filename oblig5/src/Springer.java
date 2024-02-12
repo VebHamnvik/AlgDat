@@ -12,6 +12,12 @@ public class Springer
     private static int brett[][];     // nxn-tabell, representerer sjakkbrettet
     private static int LEDIG = 0;     // Verdi som markerer ledig rute
 
+	// Dette har jeg gjort:
+	// Definerer ulike måter en springer kan bevege seg. Disse blir kalt i springertur()
+	private static final int[] radEndring = {2, 1, -1, -2, -2, -1, 1, 2};
+	private static final int[] kolonneEndring = {1, 2, 2, 1, -1, -2, -2, -1};
+	// Slutt Vebjørn's kule variabler
+
     
     // springertur(): Rekursiv metode som prøver å finne en "springertur" med start i
     // rute (i,j).  Returnerer true hvis løsning funnet, false ellers.
@@ -31,6 +37,20 @@ public class Springer
 	// rekursive kall på metoden springertur()
 
 	/*** Koden mangler her, skal programmeres i oppgave 1 ***/
+	// Dette har jeg gjort:
+	for (int k = 0; k < 8; k++) {
+		// En for loop som sjekker alle mulige mulige veier en springer kan gå
+		int nyI = i + radEndring[k];
+		int nyJ = j + kolonneEndring[k];
+
+		// Hvis det nye steget er lovlig ta et skritt til med de nye verdiene for i og j
+		if (lovlig(nyI, nyJ)) {
+			if (springertur(nyI, nyJ)) {
+				return true;
+			}
+		}
+	}
+	// Slutt Vebjørn's fantastiske kode
 	
 	// Hvis vi kommer hit i koden, fantes det ingen springertur
 	// med start i rute (i,j). Fjerner flyttet og returnerer false
@@ -70,7 +90,7 @@ public class Springer
     public static void main(String argv[])
     {
 	Scanner in = new Scanner(System.in); 
-	System.out.print("  n ? ");
+	System.out.print("Hvor stort brett? - n ? ");
 	n = in.nextInt();
 	if (n < 1 || n > 9)
 	{
@@ -78,7 +98,7 @@ public class Springer
 	    System.exit(1);
 	}
 	 
-	System.out.print("i j ? ");
+	System.out.print("Hvilken startposisjon? - i j ? ");
 	int i = in.nextInt();
 	int j = in.nextInt();
 	if (i < 1 || i > n || j < 1 || j > n)
