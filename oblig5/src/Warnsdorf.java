@@ -13,8 +13,7 @@ public class Warnsdorf
     private static final int[] radEndring = {2, 1, -1, -2, -2, -1, 1, 2};
     private static final int[] kolonneEndring = {1, 2, 2, 1, -1, -2, -2, -1};
 
-    public static boolean springertur(int i, int j)
-    {
+    public static boolean springertur(int i, int j) {
         antFlytt++;
         brett[i][j] = antFlytt;
 
@@ -22,40 +21,42 @@ public class Warnsdorf
             return true;
 
         int counter = Integer.MAX_VALUE;
-        int nesteI = i, nesteJ = j, nyI = 0, nyJ = 0;
+        int nesteI = 0, nesteJ = 0;
+        int u = i, v = j;
 
-        int internal_counter = 0;
+        // Sjekker alle moves fra en gitt posisjon og teller antall
+        // lovlige
+        for (int k = 0; k < 8; k++) {
 
-        for (int k = 0; k < 8; k++)
-        {
-            internal_counter = 0;
-            nesteI = i + radEndring[k];
-            nesteJ = j + kolonneEndring[k];
+            int internal_counter = 0;
+            int nyU = u + radEndring[k];
+            int nyV = v + kolonneEndring[k];
 
-            if (lovlig(nesteI, nesteJ)) {
-
-                for (int o = 0; o < 8; o++) {
-                    nesteI = nesteI + radEndring[o];
-                    nesteJ = nesteJ + kolonneEndring[o];
-                    if (lovlig(nesteI, nesteJ)) {
+            if (lovlig(nyU, nyV)) {
+                // Teller antall lovlige flytt videre fra (nyU, nyV)
+                for (int l = 0; l < 8; l++)
+                    if (lovlig(nyU + radEndring[l], nyV + kolonneEndring[l])) {
                         internal_counter++;
                     }
+
+                // Hvis det er færre lovlige moves fra en gitt posisjon enn
+                // tidligere funnet vil det antallet bli lagret i counter, og
+                // en ny springertur vil kjøres fra den posisjonen
+                if (internal_counter < counter) {
+                    counter = internal_counter;
+                    nesteI = nyU;
+                    nesteJ = nyV;
                 }
             }
-            if (internal_counter < counter && internal_counter != 0) {
-                counter = internal_counter;
-                nyI = nesteI;
-                nyJ = nesteJ;
-            }
         }
-        if (lovlig(nyI, nyJ)) {
-            if (springertur(nyI, nyJ)) {
-                return true;
-            }
-        }
-        antFlytt--;
-        brett[i][j] = LEDIG;
-        return false;
+
+        // Returnerer false hvis ingen mulige veier videre
+        if (counter == Integer.MAX_VALUE)
+            return false;
+
+        // Ingen backtracking, flytter bare direkte videre til det
+        // lovlige feltet med minst flytt videre
+        return springertur(nesteI, nesteJ);
     }
 
 
