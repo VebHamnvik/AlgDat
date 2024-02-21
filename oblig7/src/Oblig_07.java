@@ -57,6 +57,30 @@ public class Oblig_07
     // Oppgave 3
     static void skrivUt(Trenode rot)
     {
+        System.out.println("Verdi:    Sum:    Forelder:");
+
+        if (rot == null)
+            return;
+
+        Queue<Trenode> trenodeQueue = new LinkedList<>();
+        trenodeQueue.add(rot);
+
+        while(!trenodeQueue.isEmpty())
+        {
+            Trenode trenode = trenodeQueue.remove();
+            if (trenode.forelder == null)
+                //System.out.println(trenode.verdi + "        " + trenode.sum + "         *");
+                System.out.printf("%-10d%-10d%-10s%n", trenode.verdi, trenode.sum, "*");
+            else
+                //System.out.println(trenode.verdi + "        " + trenode.sum + "         " + trenode.forelder.verdi);
+                System.out.printf("%-10d%-10d%-10d%n", trenode.verdi, trenode.sum, trenode.forelder.verdi);
+
+            if (trenode.venstre != null)
+                trenodeQueue.add(trenode.venstre);
+            if (trenode.høyre != null)
+                trenodeQueue.add(trenode.høyre);
+
+        }
     }
 
     // Testprogram
@@ -75,10 +99,7 @@ public class Oblig_07
                                         new Trenode(20, null, null))));
 
         settSum(rot);
-        System.out.println(rot.høyre.sum);
         settForelder(rot);
-        System.out.println("Trenoden: " + rot.høyre.venstre.verdi);
-        System.out.println("Har som forelder, noden: " + rot.høyre.høyre.forelder.verdi);
         skrivUt(rot);
     }
 }
