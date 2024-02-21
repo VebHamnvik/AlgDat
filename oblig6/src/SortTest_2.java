@@ -59,7 +59,7 @@ public class SortTest_2 {
             for (int i = 0; i < L.size(); i++){
                 System.out.print(A[i] + ", ");
             }
-            System.out.println("\nn          tA      tL     tL/tA");
+            System.out.println("\n\nn          tA      tL     tL/tA");
 
             int w = 1000000;
             for (int i = 0; i <  10; i++){
