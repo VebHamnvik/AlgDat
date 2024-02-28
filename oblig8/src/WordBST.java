@@ -138,7 +138,8 @@ public class WordBST
     String path = Paths.get("").toAbsolutePath().toString();
 
 	// Oppretter ordleser og tomt søketre
-	WordReader wR = new WordReader(path+"/oblig8/data/"+fileName);
+    // kan være denne må endres på for å få den til å finne txt filen
+	WordReader wR = new WordReader(path+fileName);
 	WordBST wBST = new WordBST();
 
 	// Leser alle ordene på filen og legger inn i treet
