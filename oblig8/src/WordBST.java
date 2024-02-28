@@ -99,14 +99,14 @@ public class WordBST
         while(current != null){
             int comparison = ord.compareTo(current.word);
             if (comparison == 0) {
-                System.out.println(current.word + " appears " + current.count + "times in the text");
+                System.out.println(current.word + " appears " + current.count + " times in the text");
                 return;
             }
 
-            if (comparison < 0)
+            else if (comparison < 0)
                 current = current.left;
 
-            if (comparison > 0)
+            else
                 current = current.right;
         }
     }
