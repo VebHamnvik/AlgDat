@@ -1,0 +1,11 @@
+banana apple peach coconut pear mango papaya
+banana apple peach coconut pear mango papaya
+banana apple peach         pear mango papaya
+banana apple peach         pear mango papaya
+banana apple peach              mango papaya
+banana apple                    mango
+banana apple                    mango
+banana apple                    mango
+banana                          mango
+                                mango
+
