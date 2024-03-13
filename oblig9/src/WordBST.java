@@ -74,7 +74,7 @@ public class WordBST
 
 	// Oppretter ordleser og tomt søketre
     // kan være denne må endres på for å få den til å finne txt filen
-	WordReader wR = new WordReader(path+"/oblig9/data/"+fileName);
+	WordReader wR = new WordReader(path+fileName);
 	WordBST wBST = new WordBST();
 
 	// Leser alle ordene på filen og legger inn i treet
