@@ -74,7 +74,7 @@ public class WordHash
 
 	// Oppretter ordleser og tomt søketre
     // kan være denne må endres på for å få den til å finne txt filen
-	WordReader wR = new WordReader(path+fileName);
+	WordReader wR = new WordReader(path+"/data/"+fileName);
 	WordHash wHash = new WordHash();
 
 	// Leser alle ordene på filen og legger inn i treet
